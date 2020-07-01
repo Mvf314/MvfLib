@@ -1,0 +1,25 @@
+modLoader="javafml"
+loaderVersion="[31,)"
+showAsResourcePack=false
+
+[[mods]]
+    modId="mvflib"
+    version="0.0.1"
+    displayName="MvfLib"
+    displayURL="minecraftforge.net"
+	authors="Mvf314"
+	description='''Library for my mods'''
+
+[[dependencies.mvflib]]
+    modId="forge"
+	mandatory=true
+	versionRange="[31,)"
+	ordering="NONE"
+	side="BOTH"
+
+[[dependencies.mvflib]]
+	modId="minecraft"
+	mandatory=true
+	versionRange="[1.15.2,)"
+	ordering="NONE"
+	side="BOTH"

@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 /MvfLib.iml
 /.gradle/
 /build/
 /run/
 /src/test/
+=======
+/.gradle/
+/build/
+/.idea/
+/run/
+/src/test/
+/MvfLib.iml
+>>>>>>> 042766c9285066a37b9d12132ddc5a11206b39d9

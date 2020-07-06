@@ -1,5 +1,10 @@
 package mvf314.mvflib.block;
 
+/**
+ * Utility class for block harvest levels
+ * @author Mvf314
+ * @version 0.0.2
+ */
 public class HarvestLevel {
 	public static final int WOOD = 0;
 	public static final int STONE = 1;

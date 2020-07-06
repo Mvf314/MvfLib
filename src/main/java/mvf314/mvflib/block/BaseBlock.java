@@ -10,14 +10,12 @@ public abstract class BaseBlock extends Block {
 
 	public BaseBlock(Block.Properties prop, String name) {
 		super(prop);
-		System.out.println("BaseBlock.BaseBlock1");
 		NAME = name;
 		setRegistryName(NAME);
 	}
 
 	public BaseBlock(Material mat, String name) {
 		super(Properties.create(mat));
-		System.out.println("BaseBlock.BaseBlockÉ2");
 		NAME = name;
 		setRegistryName(NAME);
 	}

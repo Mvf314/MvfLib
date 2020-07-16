@@ -2,6 +2,7 @@ package mvf314.mvflib.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import mvf314.mvflib.block.BaseBlock;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -58,13 +59,12 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 
 	/**
 	 * Create a loot table that drops the block without NBT data when mined
-	 * @param name  Block registry name
 	 * @param block Block object
 	 * @return      The loot table builder
 	 */
-	protected LootTable.Builder createSimpleTable(String name, Block block) {
+	protected LootTable.Builder createSimpleTable(BaseBlock block) {
 		LootPool.Builder builder = LootPool.builder()
-				.name(name)
+				.name(block.NAME)
 				.rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(block));
 		return LootTable.builder().addLootPool(builder);

@@ -2,6 +2,7 @@ package mvf314.mvflib.datagen;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import mvf314.mvflib.block.BaseBlock;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -17,29 +18,59 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The BaseLootTableProvider class can be extended to generate loot tables
+ * @author Mvf314
+ * @version 0.0.2
+ */
 public abstract class BaseLootTableProvider extends LootTableProvider {
 
+	/**
+	 * Logger object
+	 */
 	public static final Logger LOGGER = LogManager.getLogger();
+	/**
+	 * JSON generator
+	 */
 	public static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
+	/**
+	 * Loot table holder
+	 */
 	protected final Map<Block, LootTable.Builder> lootTables = new HashMap<>();
+	/**
+	 * Data generator
+	 */
 	private final DataGenerator gen;
 
+	/**
+	 * Couple data generator to this loot table provider
+	 * @param gen Data generator to couple
+	 */
 	public BaseLootTableProvider(DataGenerator gen) {
 		super(gen);
 		this.gen = gen;
 	}
 
+	/**
+	 * This method specifies which loot tables should be generated
+	 */
 	protected abstract void addTables();
 
-	protected LootTable.Builder createSimpleTable(String name, Block block) {
+	/**
+	 * Create a loot table that drops the block without NBT data when mined
+	 * @param block Block object
+	 * @return      The loot table builder
+	 */
+	protected LootTable.Builder createSimpleTable(BaseBlock block) {
 		LootPool.Builder builder = LootPool.builder()
-				.name(name)
+				.name(block.NAME)
 				.rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(block));
 		return LootTable.builder().addLootPool(builder);
 	}
 
+	// Execute loot table generation
 	@Override
 	public void act(DirectoryCache cache) {
 		addTables();
@@ -51,6 +82,7 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 		writeTables(cache, tables);
 	}
 
+	// Write loot tables to generated dir
 	private void writeTables(DirectoryCache cache, Map<ResourceLocation, LootTable> tables) {
 		Path outFolder = this.gen.getOutputFolder();
 		tables.forEach((key, lootTable) -> {
@@ -63,8 +95,10 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 		});
 	}
 
+	/**
+	 * Loot table provider name, used in logging. Override to return your mod name.
+	 * @return Provider name for use in logging.
+	 */
 	@Override
-	public String getName() {
-		return "LootTables";
-	}
+	public abstract String getName();
 }

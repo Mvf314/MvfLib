@@ -57,6 +57,10 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 */
 	protected abstract void addTables();
 
+	protected void addSimpleTable(BaseBlock block) {
+		lootTables.put(block, createSimpleTable(block));
+	}
+
 	/**
 	 * Create a loot table that drops the block without NBT data when mined
 	 * @param block Block object

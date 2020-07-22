@@ -28,6 +28,11 @@ public abstract class BaseModelProvider extends ItemModelProvider {
 				.texture("layer0", "item/" + item.NAME);
 	}
 
+	protected void createSpawnEggModel(BaseItem item) {
+		getBuilder("item/" + item.NAME)
+				.parent(getExistingFile(mcLoc("item/template_spawn_egg")));
+	}
+
 	@Nonnull
 	@Override
 	public abstract String getName();

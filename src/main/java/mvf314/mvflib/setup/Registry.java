@@ -2,11 +2,13 @@ package mvf314.mvflib.setup;
 
 import mvf314.mvflib.block.BaseBlock;
 import mvf314.mvflib.item.BaseItem;
+import mvf314.mvflib.item.SpawnEggItem;
 import mvf314.mvflib.tile.BaseTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 
 import java.util.function.Supplier;
@@ -46,6 +48,10 @@ public class Registry {
 		 */
 		public static void register(final RegistryEvent.Register<Item> event, BaseItem item) {
 			event.getRegistry().register(item);
+		}
+
+		public static void registerSpawnEggColor(ColorHandlerEvent.Item event, SpawnEggItem item) {
+			event.getItemColors().register((stack, i) -> item.COLOR, item);
 		}
 	}
 

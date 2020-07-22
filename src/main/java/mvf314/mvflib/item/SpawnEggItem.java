@@ -13,12 +13,12 @@ import net.minecraft.world.World;
 import java.util.Objects;
 
 public abstract class SpawnEggItem extends BaseItem {
-	public SpawnEggItem(Properties prop, String name, EntityType<?> entity) {
+	public SpawnEggItem(Properties prop, String name, int color) {
 		super(prop, name);
-		this.entity = entity;
+		COLOR = color;
 	}
 
-	private EntityType<?> entity;
+	public final int COLOR;
 
 	protected ActionResultType tryToSpawn(ItemUseContext context, EntityType entity) {
 		World world = context.getWorld();

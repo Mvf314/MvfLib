@@ -19,10 +19,14 @@ public abstract class EnergyTileEntity extends TickableTileEntity {
 	protected LazyOptional<IEnergyStorage> energyHandler = LazyOptional.of(this::createEnergyHandler);
 
 	public static int MAX_SEND;
+	public static int MAX_RECEIVE;
+	public static int CAPACITY;
 
-	public EnergyTileEntity(TileEntityType<?> tile, int maxSend) {
+	public EnergyTileEntity(TileEntityType<?> tile, int capacity, int maxSend, int maxReceive) {
 		super(tile);
 		MAX_SEND = maxSend;
+		MAX_RECEIVE = maxReceive;
+		CAPACITY = capacity;
 	}
 
 	@Override
@@ -78,7 +82,7 @@ public abstract class EnergyTileEntity extends TickableTileEntity {
 	}
 
 	private IEnergyStorage createEnergyHandler() {
-		return new CustomEnergyStorage(MAX_SEND, 0);
+		return new CustomEnergyStorage(CAPACITY, MAX_RECEIVE, MAX_SEND);
 	}
 
 	protected abstract <T> LazyOptional<T> getOtherCapabilities(@Nonnull Capability<T> cap, @Nullable Direction side);

@@ -6,7 +6,8 @@ import net.minecraft.tileentity.TileEntityType;
 /**
  * The TickableTileEntity class is for tile entities that tick (or update) every frame.
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.2
  */
 public abstract class TickableTileEntity extends BaseTileEntity implements ITickableTileEntity {
 

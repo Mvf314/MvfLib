@@ -14,21 +14,50 @@ import net.minecraftforge.client.model.generators.ModelFile;
 import javax.annotation.Nonnull;
 import java.util.function.Function;
 
+/**
+ * This class is a data provider for block states and block models
+ * @author Mvf314
+ * @version 0.0.3
+ * @since 0.0.2
+ */
 public abstract class BaseBlockStateProvider extends BlockStateProvider {
 
+	/**
+	 * Couple data generator to this class
+	 * @param gen           Data generator
+	 * @param modid         Mod ID
+	 * @param exFileHelper  Existing file helper, pass GatherDataEvent.getExistingFileHelper()
+	 */
 	public BaseBlockStateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
 		super(gen, modid, exFileHelper);
 	}
 
+	/**
+	 * This method will be executed by the data generator
+	 */
 	@Override
 	protected abstract void registerStatesAndModels();
 
+	/**
+	 * Create a basic block state without any properties
+	 * @param block Block to create block state for
+	 */
 	protected void createSimpleBlockstate(BaseBlock block) {
 		ResourceLocation loc = modLoc("block/" + block.NAME);
 		ModelFile model = models().cubeAll(block.NAME, loc);
 		simpleBlock(block, model);
 	}
 
+	/**
+	 * Create a block state for a block which has different textures for different faces. Use for DirectionalBlocks.
+	 * @param block The block to create block state for
+	 * @param up    Suffix for texture file for top side
+	 * @param down  Suffix for texture for bottom side
+	 * @param front Suffix for texture for front side
+	 * @param back  Suffix for texture for back side
+	 * @param left  Suffix for texture for left side
+	 * @param right Suffix for texture for right side
+	 */
 	protected void createDirectionalBlockstate(BaseBlock block, String up, String down, String front, String back, String left, String right) {
 		ResourceLocation locUp = modLoc("block/" + block.NAME + up);
 		ResourceLocation locDown = modLoc("block/" + block.NAME + down);
@@ -50,6 +79,10 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 				});
 	}
 
+	/**
+	 * Name of the data provider. Override to return your mod id.
+	 * @return Name of blockstate provider
+	 */
 	@Nonnull
 	@Override
 	public abstract String getName();

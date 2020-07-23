@@ -21,7 +21,8 @@ import java.util.Map;
 /**
  * The BaseLootTableProvider class can be extended to generate loot tables
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.1
  */
 public abstract class BaseLootTableProvider extends LootTableProvider {
 
@@ -58,6 +59,15 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	protected abstract void addTables();
 
 	/**
+	 * Add a simple loot table to be generated
+	 * @param block Block
+	 * @see BaseLootTableProvider#createSimpleTable(BaseBlock)
+	 */
+	protected void addSimpleTable(BaseBlock block) {
+		lootTables.put(block, createSimpleTable(block));
+	}
+
+	/**
 	 * Create a loot table that drops the block without NBT data when mined
 	 * @param block Block object
 	 * @return      The loot table builder
@@ -70,7 +80,10 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 		return LootTable.builder().addLootPool(builder);
 	}
 
-	// Execute loot table generation
+	/**
+	 * Execute loot table generation
+	 * @param cache Directory cache
+	 */
 	@Override
 	public void act(DirectoryCache cache) {
 		addTables();
@@ -82,7 +95,11 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 		writeTables(cache, tables);
 	}
 
-	// Write loot tables to generated dir
+	/**
+	 * Write loot tables to file
+	 * @param cache  Directory cache
+	 * @param tables Loot table map
+	 */
 	private void writeTables(DirectoryCache cache, Map<ResourceLocation, LootTable> tables) {
 		Path outFolder = this.gen.getOutputFolder();
 		tables.forEach((key, lootTable) -> {

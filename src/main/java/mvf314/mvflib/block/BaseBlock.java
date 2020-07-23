@@ -11,7 +11,8 @@ import java.util.Map;
 /**
  * The BaseBlock class is a simple abstract wrapper for the Block class and couples a registry name to the block object
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.1
  */
 public abstract class BaseBlock extends Block implements ITranslatable {
 
@@ -20,6 +21,9 @@ public abstract class BaseBlock extends Block implements ITranslatable {
 	 */
 	public final String NAME;
 
+	/**
+	 * Language map
+	 */
 	protected Map<String, String> lang = new HashMap<>();
 
 	/**
@@ -52,6 +56,10 @@ public abstract class BaseBlock extends Block implements ITranslatable {
 		return new ItemStack(this);
 	}
 
+	/**
+	 * Return the language map
+	 * @return Language map
+	 */
 	public Map<String, String> getLang() {
 		return lang;
 	}

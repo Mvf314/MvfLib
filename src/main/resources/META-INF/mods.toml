@@ -4,7 +4,7 @@ showAsResourcePack=false
 
 [[mods]]
     modId="mvflib"
-    version="0.0.2"
+    version="0.0.3"
     displayName="MvfLib"
     displayURL="minecraftforge.net"
 	authors="Mvf314"

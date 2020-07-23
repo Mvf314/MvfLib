@@ -12,9 +12,28 @@ import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
+/**
+ * The EnergyContainer is a container that supports Forge Energy
+ * @author Mvf314
+ * @version 0.0.3
+ * @since 0.0.3
+ */
 public class EnergyContainer extends BaseContainer {
+
+	/**
+	 * Create an EnergyContainer with the given properties
+	 * @param type      The ContainerType object
+	 * @param id        Container id
+	 * @param world     World object
+	 * @param pos       Block position
+	 * @param inventory Player inventory
+	 * @param baseBlock Block the container links to
+	 * @param name      Container name
+	 */
 	public EnergyContainer(@Nullable ContainerType<?> type, int id, World world, BlockPos pos, PlayerInventory inventory, BaseBlock baseBlock, String name) {
 		super(type, id, world, pos, inventory, baseBlock, name);
+
+		// Track the energy value
 		trackInt(new IntReferenceHolder() {
 			@Override
 			public int get() {
@@ -30,11 +49,18 @@ public class EnergyContainer extends BaseContainer {
 		});
 	}
 
+	/**
+	 * Get the stored energy
+	 * @return Energy stored
+	 */
 	public int getEnergy() {
 		return te.getCapability(CapabilityEnergy.ENERGY).map(IEnergyStorage::getEnergyStored)
 				.orElse(0);
 	}
 
+	/**
+	 * Initialize other capability handlers here (for example item handlers)
+	 */
 	@Override
 	protected void initContainer() {
 

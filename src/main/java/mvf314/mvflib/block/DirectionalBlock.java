@@ -17,7 +17,8 @@ import javax.annotation.Nullable;
  * The DirectionalBlock is an extension of the BaseBlock which adds metadata to the block so that is faces a distinct side.
  * This is useful for blocks with different side textures.
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.2
  */
 public class DirectionalBlock extends BaseBlock {
 

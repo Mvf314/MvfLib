@@ -9,7 +9,8 @@ import java.util.Map;
 /**
  * The BaseItem abstract class is a wrapper for the Item class and binds a registry name to the object.
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.1
  */
 public abstract class BaseItem extends Item implements ITranslatable {
 
@@ -18,6 +19,9 @@ public abstract class BaseItem extends Item implements ITranslatable {
 	 */
 	public final String NAME;
 
+	/**
+	 * Language map
+	 */
 	protected Map<String, String> lang = new HashMap<>();
 
 	/**
@@ -31,6 +35,10 @@ public abstract class BaseItem extends Item implements ITranslatable {
 		setRegistryName(name);
 	}
 
+	/**
+	 * Get the language map
+	 * @return Language map
+	 */
 	public Map<String, String> getLang() {
 		return lang;
 	}

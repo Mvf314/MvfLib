@@ -14,7 +14,8 @@ import javax.annotation.Nullable;
 /**
  * The TileEntityBlock class is for blocks that have an associated tile entity.
  * @author Mvf314
- * @version 0.0.2
+ * @version 0.0.3
+ * @since 0.0.2
  */
 public abstract class TileEntityBlock extends BaseBlock {
 
@@ -43,6 +44,11 @@ public abstract class TileEntityBlock extends BaseBlock {
 	@Override
 	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
 
+	/**
+	 * This method opens the GUI associated with the tile entity.
+	 * @param player Player entity
+	 * @param te     Associated tile entity
+	 */
 	protected void openGui(PlayerEntity player, TileEntity te) {
 		if (te instanceof INamedContainerProvider) {
 			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());

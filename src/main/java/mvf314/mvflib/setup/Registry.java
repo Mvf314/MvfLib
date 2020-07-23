@@ -1,15 +1,19 @@
 package mvf314.mvflib.setup;
 
 import mvf314.mvflib.block.BaseBlock;
+import mvf314.mvflib.container.BaseContainer;
 import mvf314.mvflib.item.BaseItem;
 import mvf314.mvflib.item.SpawnEggItem;
 import mvf314.mvflib.tile.BaseTileEntity;
 import net.minecraft.block.Block;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.network.IContainerFactory;
 
 import java.util.function.Supplier;
 
@@ -65,6 +69,12 @@ public class Registry {
 		public static void register(final RegistryEvent.Register<TileEntityType<?>> event, Supplier<? extends BaseTileEntity> te, BaseBlock block) {
 			event.getRegistry().register(TileEntityType.Builder.create(te, block).build(null).setRegistryName(block.NAME));
 
+		}
+	}
+
+	public static class Containers {
+		public static void register(final RegistryEvent.Register<ContainerType<?>> event, IContainerFactory<BaseContainer> factory, String name) {
+			event.getRegistry().register(IForgeContainerType.create(factory).setRegistryName(name));
 		}
 	}
 }

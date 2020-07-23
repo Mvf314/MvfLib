@@ -2,8 +2,12 @@ package mvf314.mvflib.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockReader;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
@@ -38,4 +42,10 @@ public abstract class TileEntityBlock extends BaseBlock {
 	@Nullable
 	@Override
 	public abstract TileEntity createTileEntity(BlockState state, IBlockReader world);
+
+	protected void openGui(PlayerEntity player, TileEntity te) {
+		if (te instanceof INamedContainerProvider) {
+			NetworkHooks.openGui((ServerPlayerEntity) player, (INamedContainerProvider) te, te.getPos());
+		}
+	}
 }

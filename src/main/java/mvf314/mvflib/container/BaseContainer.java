@@ -27,9 +27,9 @@ public abstract class BaseContainer extends Container {
 		te = (BaseTileEntity) world.getTileEntity(pos);
 		playerInventory = new InvWrapper(inventory);
 		block = baseBlock;
+		NAME = name;
 
 		initContainer();
-		NAME = name;
 	}
 
 	protected abstract void initContainer();

@@ -1,5 +1,6 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -27,8 +28,8 @@ public class DirectionalBlock extends BaseBlock {
 	 * @param prop  Block properties
 	 * @param name  Registry name
 	 */
-	public DirectionalBlock(Properties prop, String name) {
-		super(prop, name);
+	public DirectionalBlock(Properties prop, RegistryMap map) {
+		super(prop, map);
 	}
 
 	// If the block is placed in the world, set the correct value for the "facing" metadata

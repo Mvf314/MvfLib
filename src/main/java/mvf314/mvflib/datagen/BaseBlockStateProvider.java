@@ -1,6 +1,7 @@
 package mvf314.mvflib.datagen;
 
 import mvf314.mvflib.block.BaseBlock;
+import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.state.properties.BlockStateProperties;
@@ -22,14 +23,17 @@ import java.util.function.Function;
  */
 public abstract class BaseBlockStateProvider extends BlockStateProvider {
 
+	private final RegistryMap map;
+
 	/**
 	 * Couple data generator to this class
 	 * @param gen           Data generator
 	 * @param modid         Mod ID
 	 * @param exFileHelper  Existing file helper, pass GatherDataEvent.getExistingFileHelper()
 	 */
-	public BaseBlockStateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper) {
+	public BaseBlockStateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper, RegistryMap registryMap) {
 		super(gen, modid, exFileHelper);
+		map = registryMap;
 	}
 
 	/**
@@ -43,8 +47,9 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	 * @param block Block to create block state for
 	 */
 	protected void createSimpleBlockstate(BaseBlock block) {
-		ResourceLocation loc = modLoc("block/" + block.NAME);
-		ModelFile model = models().cubeAll(block.NAME, loc);
+		String name = map.getValue(block);
+		ResourceLocation loc = modLoc("block/" + name);
+		ModelFile model = models().cubeAll(name, loc);
 		simpleBlock(block, model);
 	}
 
@@ -59,14 +64,15 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	 * @param right Suffix for texture for right side
 	 */
 	protected void createDirectionalBlockstate(BaseBlock block, String up, String down, String front, String back, String left, String right) {
-		ResourceLocation locUp = modLoc("block/" + block.NAME + up);
-		ResourceLocation locDown = modLoc("block/" + block.NAME + down);
-		ResourceLocation locFront = modLoc("block/" + block.NAME + front);
-		ResourceLocation locBack = modLoc("block/" + block.NAME + back);
-		ResourceLocation locLeft = modLoc("block/" + block.NAME + left);
-		ResourceLocation locRight = modLoc("block/" + block.NAME + right);
+		String name = map.getValue(block);
+		ResourceLocation locUp = modLoc("block/" + name + up);
+		ResourceLocation locDown = modLoc("block/" + name + down);
+		ResourceLocation locFront = modLoc("block/" + name + front);
+		ResourceLocation locBack = modLoc("block/" + name + back);
+		ResourceLocation locLeft = modLoc("block/" + name + left);
+		ResourceLocation locRight = modLoc("block/" + name + right);
 
-		ModelFile model = models().cube(block.NAME, locDown, locUp, locFront, locBack, locLeft, locRight);
+		ModelFile model = models().cube(name, locDown, locUp, locFront, locBack, locLeft, locRight);
 		Function<BlockState, ModelFile> modelFunc = $ -> model;
 		getVariantBuilder(block)
 				.forAllStates(state -> {

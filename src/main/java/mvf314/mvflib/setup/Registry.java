@@ -1,9 +1,7 @@
 package mvf314.mvflib.setup;
 
-import mvf314.mvflib.block.BaseBlock;
 import mvf314.mvflib.container.BaseContainer;
-import mvf314.mvflib.item.BaseItem;
-import mvf314.mvflib.item.SpawnEggItem;
+import mvf314.mvflib.item.BaseSpawnEggItem;
 import mvf314.mvflib.tile.BaseTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
@@ -30,7 +28,7 @@ public class Registry {
 		 * @param event The registry event that is passed to the subscribed method
 		 * @param block Block to register
 		 */
-		public static void register(final RegistryEvent.Register<Block> event, BaseBlock block) {
+		public static void register(final RegistryEvent.Register<Block> event, Block block) {
 			event.getRegistry().register(block);
 		}
 
@@ -38,10 +36,9 @@ public class Registry {
 		 * Register the item/inventory version of a block
 		 * @param event     The registry event that is passed to the subscribed method
 		 * @param block     Block to register
-		 * @param itemGroup Creative tab to put the block in
 		 */
-		public static void registerItem(final RegistryEvent.Register<Item> event, BaseBlock block, Item.Properties itemGroup) {
-			event.getRegistry().register(new BlockItem(block, itemGroup).setRegistryName(block.NAME));
+		public static void registerItem(final RegistryEvent.Register<Item> event, Block block, RegistryMap registryMap) {
+			event.getRegistry().register(new BlockItem(block, registryMap.getItemGroup()).setRegistryName(block.getRegistryName()));
 		}
 	}
 
@@ -51,7 +48,7 @@ public class Registry {
 		 * @param event The registry event that is passed to the subscribed method
 		 * @param item  Item to register
 		 */
-		public static void register(final RegistryEvent.Register<Item> event, BaseItem item) {
+		public static void register(final RegistryEvent.Register<Item> event, Item item) {
 			event.getRegistry().register(item);
 		}
 
@@ -60,7 +57,7 @@ public class Registry {
 		 * @param event Registry event that is passed to the subscribed method
 		 * @param item  Spawn egg to register
 		 */
-		public static void registerSpawnEggColor(ColorHandlerEvent.Item event, SpawnEggItem item) {
+		public static void registerSpawnEggColor(ColorHandlerEvent.Item event, BaseSpawnEggItem item) {
 			event.getItemColors().register((stack, i) -> item.COLOR, item);
 		}
 	}
@@ -72,8 +69,8 @@ public class Registry {
 		 * @param te    Tile entity to register
 		 * @param block The block that is paired with this tile entity
 		 */
-		public static void register(final RegistryEvent.Register<TileEntityType<?>> event, Supplier<? extends BaseTileEntity> te, BaseBlock block) {
-			event.getRegistry().register(TileEntityType.Builder.create(te, block).build(null).setRegistryName(block.NAME));
+		public static void register(final RegistryEvent.Register<TileEntityType<?>> event, Supplier<? extends BaseTileEntity> te, Block block, RegistryMap map) {
+			event.getRegistry().register(TileEntityType.Builder.create(te, block).build(null).setRegistryName(map.getValue(block)));
 
 		}
 	}

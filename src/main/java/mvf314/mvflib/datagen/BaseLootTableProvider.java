@@ -3,6 +3,7 @@ package mvf314.mvflib.datagen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mvf314.mvflib.block.BaseBlock;
+import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
@@ -44,13 +45,16 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 */
 	private final DataGenerator gen;
 
+	private final RegistryMap map;
+
 	/**
 	 * Couple data generator to this loot table provider
 	 * @param gen Data generator to couple
 	 */
-	public BaseLootTableProvider(DataGenerator gen) {
+	public BaseLootTableProvider(DataGenerator gen, RegistryMap registryMap) {
 		super(gen);
 		this.gen = gen;
+		this.map = registryMap;
 	}
 
 	/**
@@ -74,7 +78,7 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 */
 	protected LootTable.Builder createSimpleTable(BaseBlock block) {
 		LootPool.Builder builder = LootPool.builder()
-				.name(block.NAME)
+				.name(map.getValue(block))
 				.rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(block));
 		return LootTable.builder().addLootPool(builder);

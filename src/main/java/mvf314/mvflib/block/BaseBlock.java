@@ -1,5 +1,6 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.setup.RegistryMap;
 import mvf314.mvflib.tools.ITranslatable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -17,11 +18,6 @@ import java.util.Map;
 public abstract class BaseBlock extends Block implements ITranslatable {
 
 	/**
-	 * Registry name of the block
-	 */
-	public final String NAME;
-
-	/**
 	 * Language map
 	 */
 	protected Map<String, String> lang = new HashMap<>();
@@ -31,10 +27,9 @@ public abstract class BaseBlock extends Block implements ITranslatable {
 	 * @param prop Properties of the block
 	 * @param name Registry name of the block
 	 */
-	public BaseBlock(Block.Properties prop, String name) {
+	public BaseBlock(Block.Properties prop, RegistryMap map) {
 		super(prop);
-		NAME = name;
-		setRegistryName(NAME);
+		setRegistryName(map.getValue(this));
 	}
 
 	/**
@@ -42,10 +37,9 @@ public abstract class BaseBlock extends Block implements ITranslatable {
 	 * @param mat   Material type of the block
 	 * @param name  Registry name of the block
 	 */
-	public BaseBlock(Material mat, String name) {
+	public BaseBlock(Material mat, RegistryMap map) {
 		super(Properties.create(mat));
-		NAME = name;
-		setRegistryName(NAME);
+		setRegistryName(map.getValue(this));
 	}
 
 	/**

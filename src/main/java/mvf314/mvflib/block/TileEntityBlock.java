@@ -1,5 +1,6 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -24,8 +25,8 @@ public abstract class TileEntityBlock extends BaseBlock {
 	 * @param prop Block properties
 	 * @param name Registry name of the block
 	 */
-	public TileEntityBlock(Block.Properties prop, String name) {
-		super(prop, name);
+	public TileEntityBlock(Block.Properties prop, RegistryMap map) {
+		super(prop, map);
 	}
 
 	// This block always has an associated tile entity, so it must always return true

@@ -23,7 +23,7 @@ public abstract class TileEntityBlock extends BaseBlock {
 	/**
 	 * Construct the block with the given properties.
 	 * @param prop Block properties
-	 * @param name Registry name of the block
+	 * @param map  Registry map
 	 */
 	public TileEntityBlock(Block.Properties prop, RegistryMap map) {
 		super(prop, map);

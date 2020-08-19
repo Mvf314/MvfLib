@@ -26,7 +26,7 @@ public class DirectionalBlock extends BaseBlock {
 	/**
 	 * Create a DirectionalBlock with properties and a registry name
 	 * @param prop  Block properties
-	 * @param name  Registry name
+	 * @param map   Registry map
 	 */
 	public DirectionalBlock(Properties prop, RegistryMap map) {
 		super(prop, map);

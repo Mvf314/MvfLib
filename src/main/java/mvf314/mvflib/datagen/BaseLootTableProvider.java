@@ -3,6 +3,7 @@ package mvf314.mvflib.datagen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mvf314.mvflib.block.BaseBlock;
+import mvf314.mvflib.item.BaseItem;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
@@ -82,6 +83,29 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 				.rolls(ConstantRange.of(1))
 				.addEntry(ItemLootEntry.builder(block));
 		return LootTable.builder().addLootPool(builder);
+	}
+
+	/**
+	 * Create a loot table that drops an item (think coal ore, diamond ore)
+	 * @param block Block object
+	 * @param item  Item to drop
+	 * @return		Loot table builder
+	 */
+	protected LootTable.Builder createGemTable(BaseBlock block, BaseItem item) {
+		LootPool.Builder builder = LootPool.builder()
+				.name(map.getValue(block))
+				.rolls(ConstantRange.of(1))
+				.addEntry(ItemLootEntry.builder(item));
+		return LootTable.builder().addLootPool(builder);
+	}
+
+	/**
+	 * Add a gem table to be generated
+	 * @param block Block object
+	 * @param item  Item to drop
+	 */
+	protected void addGemTable(BaseBlock block, BaseItem item) {
+		lootTables.put(block, createGemTable(block, item));
 	}
 
 	/**

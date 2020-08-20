@@ -1,6 +1,7 @@
 package mvf314.mvflib.datagen;
 
 import mvf314.mvflib.block.BaseBlock;
+import mvf314.mvflib.block.DirectionalBlock;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
@@ -53,26 +54,8 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 		simpleBlock(block, model);
 	}
 
-	/**
-	 * Create a block state for a block which has different textures for different faces. Use for DirectionalBlocks.
-	 * @param block The block to create block state for
-	 * @param up    Suffix for texture file for top side
-	 * @param down  Suffix for texture for bottom side
-	 * @param front Suffix for texture for front side
-	 * @param back  Suffix for texture for back side
-	 * @param left  Suffix for texture for left side
-	 * @param right Suffix for texture for right side
-	 */
-	protected void createDirectionalBlockstate(BaseBlock block, String up, String down, String front, String back, String left, String right) {
-		String name = map.getValue(block);
-		ResourceLocation locUp = modLoc("block/" + name + up);
-		ResourceLocation locDown = modLoc("block/" + name + down);
-		ResourceLocation locFront = modLoc("block/" + name + front);
-		ResourceLocation locBack = modLoc("block/" + name + back);
-		ResourceLocation locLeft = modLoc("block/" + name + left);
-		ResourceLocation locRight = modLoc("block/" + name + right);
-
-		ModelFile model = models().cube(name, locDown, locUp, locFront, locBack, locLeft, locRight);
+	protected void createDirectionalModelBlockstate(DirectionalBlock block, ModelFile modelFile) {
+		ModelFile model = modelFile;
 		Function<BlockState, ModelFile> modelFunc = $ -> model;
 		getVariantBuilder(block)
 				.forAllStates(state -> {
@@ -83,6 +66,28 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 							.rotationY(dir == Direction.EAST ? 90 : (dir == Direction.SOUTH ? 180 : (dir == Direction.WEST ? 270 : 0)))
 							.build();
 				});
+	}
+
+	/**
+	 * Create a block state for a block which has different textures for different faces. Use for DirectionalBlocks.
+	 * @param block The block to create block state for
+	 * @param up    Suffix for texture file for top side
+	 * @param down  Suffix for texture for bottom side
+	 * @param front Suffix for texture for front side
+	 * @param back  Suffix for texture for back side
+	 * @param left  Suffix for texture for left side
+	 * @param right Suffix for texture for right side
+	 */
+	protected void createDirectionalBlockstate(DirectionalBlock block, String up, String down, String front, String back, String left, String right) {
+		String name = map.getValue(block);
+		ResourceLocation locUp = modLoc("block/" + name + up);
+		ResourceLocation locDown = modLoc("block/" + name + down);
+		ResourceLocation locFront = modLoc("block/" + name + front);
+		ResourceLocation locBack = modLoc("block/" + name + back);
+		ResourceLocation locLeft = modLoc("block/" + name + left);
+		ResourceLocation locRight = modLoc("block/" + name + right);
+
+		createDirectionalModelBlockstate(block, models().cube(name, locDown, locUp, locFront, locBack, locLeft, locRight));
 	}
 
 	/**

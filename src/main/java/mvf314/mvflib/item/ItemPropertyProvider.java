@@ -54,4 +54,15 @@ public class ItemPropertyProvider {
 		return get(64, 0, null, group, Rarity.COMMON, null, false);
 	}
 
+	public static Item.Properties getTool(ItemGroup group, int durability, Rarity rarity, boolean canRepair) {
+		Item.Properties prop = new Item.Properties()
+				.maxDamage(durability)
+				.group(group)
+				.rarity(rarity);
+		if (!canRepair) {
+			prop = prop.setNoRepair();
+		}
+		return prop;
+	}
+
 }

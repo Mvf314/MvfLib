@@ -4,6 +4,9 @@ import java.util.Map;
 
 /**
  * Implement this interface for things with translation keys (blocks, items) for correct localization
+ * @author Mvf314
+ * @version 0.0.4
+ * @since 0.0.2
  */
 public interface ITranslatable {
 	/**

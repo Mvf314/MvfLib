@@ -21,7 +21,7 @@ import java.util.function.Function;
 /**
  * This class is a data provider for block states and block models
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.4
  * @since 0.0.2
  */
 public abstract class BaseBlockStateProvider extends BlockStateProvider {
@@ -56,7 +56,11 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 		simpleBlock(block, model);
 	}
 
-	// can be used with either a DirectionalBlock of DirectionalXZBlock
+	/**
+	 * Create a blockstate for a DirectionalBlock with a custom ModelFile
+	 * @param block			A directional block
+	 * @param modelFile		The desired model file
+	 */
 	protected void createDirectionalModelBlockstate(BaseBlock block, ModelFile modelFile) {
 		ModelFile model = modelFile;
 		Function<BlockState, ModelFile> modelFunc = $ -> model;

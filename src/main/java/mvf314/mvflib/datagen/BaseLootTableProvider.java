@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * The BaseLootTableProvider class can be extended to generate loot tables
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.4
  * @since 0.0.1
  */
 public abstract class BaseLootTableProvider extends LootTableProvider {

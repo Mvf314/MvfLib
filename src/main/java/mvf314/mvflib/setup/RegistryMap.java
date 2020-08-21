@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * The RegistryMap class is a container for registry entries
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.4
  * @since 0.0.3
  */
 public class RegistryMap {

@@ -14,7 +14,14 @@ import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nullable;
 
-public class DirectionalXZBlock extends BaseBlock {
+/**
+ * The DirectionalXZBlock is like the DirectionalBlock, but without the option of facing up and down (locked to the horizontal plane).
+ * Useful for machines.
+ * @author Mvf314
+ * @version 0.0.4
+ * @since 0.0.4
+ */
+public abstract class DirectionalXZBlock extends BaseBlock {
 	/**
 	 * Create a DirectionalXZBlock with properties and a registry name
 	 * @param prop  Block properties

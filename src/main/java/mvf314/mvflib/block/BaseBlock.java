@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * The BaseBlock class is a simple abstract wrapper for the Block class and couples a registry name to the block object
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.4
  * @since 0.0.1
  */
 public abstract class BaseBlock extends Block implements ITranslatable {

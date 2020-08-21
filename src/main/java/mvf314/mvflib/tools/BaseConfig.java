@@ -72,7 +72,11 @@ public abstract class BaseConfig {
 	 * @param defaultValue  Default value
 	 * @return  Config builder with this int added
 	 */
-	protected static ForgeConfigSpec.IntValue unboundedInt(ForgeConfigSpec.Builder builder, String comment, String name, int defaultValue) {
+	protected static ForgeConfigSpec.IntValue positiveInt(ForgeConfigSpec.Builder builder, String comment, String name, int defaultValue) {
 		return builder.comment(comment).defineInRange(name, defaultValue, 0, Integer.MAX_VALUE);
+	}
+
+	protected static ForgeConfigSpec.DoubleValue positiveDouble(ForgeConfigSpec.Builder builder, String comment, String name, double defaultValue) {
+		return builder.comment(comment).defineInRange(name, defaultValue, 0, Double.MAX_VALUE);
 	}
 }

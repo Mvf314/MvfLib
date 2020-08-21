@@ -33,3 +33,6 @@ You also need to add MvfLib as a dependency in mods.toml:
 ````
 Finally, add the MvfLib JAR as a dependency for your project module in IntelliJ.
 Now you can use MvfLib code in your mod!
+
+## License
+This mod is released under the [Minecraft Mod Public License](https://github.com/Mvf314/MvfLib/blob/master/LICENSE.md).

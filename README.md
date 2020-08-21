@@ -1,5 +1,5 @@
 # MvfLib
-This is a library for Minecraft 1.15.2 tha simplifies some tasks to reduce boilerplate code in your mod code.
+This is a library for Minecraft 1.15.2 that simplifies some tasks to reduce boilerplate code in your mod code.
 This library handles things like object creation and registration, data generation and other things.
 
 ## Usage
@@ -27,7 +27,7 @@ You also need to add MvfLib as a dependency in mods.toml:
 [[dependencies.modname]]
   modId="mvflib"
   mandatory=true
-  versionRange="[0.0.1)"
+  versionRange="[0.0.1,)"
   ordering="NONE"
   side="BOTH"
 ````

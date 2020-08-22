@@ -63,7 +63,7 @@ public abstract class BaseModelProvider extends ItemModelProvider {
 	protected void createSimpleItemModel(BaseItem item) {
 		String name = map.getValue(item);
 		getBuilder("item/" + name)
-				.parent(getExistingFile(mcLoc("item/handheld")))
+				.parent(getExistingFile(mcLoc("item/generated")))
 				.texture("layer0", "item/" + name);
 	}
 

@@ -9,6 +9,12 @@ import net.minecraft.state.IProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+/**
+ * The WorldTools class contains static methods that provide some utilities for changing blockstates, spawning items, etc.
+ * @author Mvf314
+ * @version 0.0.5
+ * @since 0.0.5
+ */
 public class WorldTools {
 
 	public static boolean spawnItem(World world, BlockPos blockPos, Item item) {

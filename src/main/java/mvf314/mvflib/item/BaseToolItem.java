@@ -2,13 +2,15 @@ package mvf314.mvflib.item;
 
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.Hand;
 
 /**
  * The BaseToolItem is an extension of the BaseItem which allows this item to have durability and attack properties
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.5
  * @since 0.0.4
  */
 public abstract class BaseToolItem extends BaseItem {
@@ -46,6 +48,17 @@ public abstract class BaseToolItem extends BaseItem {
 	 */
 	protected final void addDamage(int damage, ItemStack itemStack, LivingEntity player) {
 		itemStack.damageItem(damage, player, entity -> {
+			entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
+		});
+	}
+
+	/**
+	 * Damage the tool
+	 * @param damage	Amount of damage to deal
+	 * @param player	Player using the tool
+	 */
+	protected final void addDamage(int damage, PlayerEntity player) {
+		player.getHeldItem(Hand.MAIN_HAND).damageItem(damage, player, entity -> {
 			entity.sendBreakAnimation(EquipmentSlotType.MAINHAND);
 		});
 	}

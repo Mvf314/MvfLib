@@ -53,7 +53,7 @@ public abstract class DirectionalBlock extends BaseBlock {
 	 * @param entity    Entity that places the block
 	 * @return          Block facing direction
 	 */
-	private Direction getFacingFromEntity(BlockPos pos, LivingEntity entity) {
+	public static Direction getFacingFromEntity(BlockPos pos, LivingEntity entity) {
 		return Direction.getFacingFromVector(
 				(float) (entity.getPosX() - pos.getX()),
 				(float) (entity.getPosY() - pos.getY()),

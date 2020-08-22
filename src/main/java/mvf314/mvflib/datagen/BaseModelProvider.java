@@ -13,7 +13,7 @@ import javax.annotation.Nonnull;
 /**
  * Data provider for item models
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.5
  * @since 0.0.2
  */
 public abstract class BaseModelProvider extends ItemModelProvider {
@@ -42,9 +42,18 @@ public abstract class BaseModelProvider extends ItemModelProvider {
 	 * @param block Block
 	 */
 	protected void createBlockItemModel(BaseBlock block) {
+		createBlockItemWithCustomModel(block, map.getValue(block));
+	}
+
+	/**
+	 * Create item model for a block (in inventory) with a specified block model
+	 * @param block Block
+	 * @param modelName Model name
+	 */
+	protected void createBlockItemWithCustomModel(BaseBlock block, String modelName) {
 		String name = map.getValue(block);
 		getBuilder("item/" + name)
-			.parent(getExistingFile(modLoc("block/" + name)));
+				.parent(getExistingFile(modLoc("block/" + modelName)));
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.datagen.BlockStateGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +19,7 @@ import javax.annotation.Nullable;
  * The DirectionalBlock is an extension of the BaseBlock which adds metadata to the block so that is faces a distinct side.
  * This is useful for blocks with different side textures.
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.5
  * @since 0.0.2
  */
 public abstract class DirectionalBlock extends BaseBlock {
@@ -58,5 +59,17 @@ public abstract class DirectionalBlock extends BaseBlock {
 				(float) (entity.getPosX() - pos.getX()),
 				(float) (entity.getPosY() - pos.getY()),
 				(float) (entity.getPosZ() - pos.getZ()));
+	}
+
+	/**
+	 * Set default block state
+	 * @param modid Mod ID
+	 * @return Block state JSON
+	 */
+	@Override
+	public String getBlockState(String modid) {
+		return BlockStateGenerator.generateFromStates(
+				BlockStateGenerator.getDirectional(modid, getRegistryName().getPath())
+		);
 	}
 }

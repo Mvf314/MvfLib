@@ -1,6 +1,6 @@
 package mvf314.mvflib.item;
 
-import mvf314.mvflib.datagen.ItemModel;
+import mvf314.mvflib.datagen.ItemModelGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import mvf314.mvflib.tools.IItemModel;
 import mvf314.mvflib.tools.ITranslatable;
@@ -40,8 +40,13 @@ public abstract class BaseItem extends Item implements ITranslatable, IItemModel
 		return lang;
 	}
 
+	/**
+	 * Get standard item model
+	 * @param modid Mod ID
+	 * @return JSON String
+	 */
 	@Override
 	public String getItemModel(String modid) {
-		return ItemModel.getSimple(modid, getRegistryName().getPath());
+		return ItemModelGenerator.getSimple(modid, getRegistryName().getPath());
 	}
 }

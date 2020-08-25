@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 /**
  * Data provider for recipes
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.5
  * @since 0.0.3
  */
 public abstract class BaseRecipeProvider extends RecipeProvider {
@@ -25,6 +25,7 @@ public abstract class BaseRecipeProvider extends RecipeProvider {
 	 */
 	public BaseRecipeProvider(DataGenerator gen, String modid) {
 		super(gen);
+		this.modid = modid;
 	}
 
 	/**

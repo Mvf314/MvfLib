@@ -1,6 +1,6 @@
 package mvf314.mvflib.item;
 
-import mvf314.mvflib.datagen.ItemModel;
+import mvf314.mvflib.datagen.ItemModelGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -71,9 +71,14 @@ public abstract class BaseToolItem extends BaseItem {
 		return super.hitEntity(stack, target, attacker);
 	}
 
+	/**
+	 * Get standard item model
+	 * @param modid Mod ID
+	 * @return JSON String
+	 */
 	@Override
 	public String getItemModel(String modid) {
-		return ItemModel.getHandheld(modid, getRegistryName().getPath());
+		return ItemModelGenerator.getHandheld(modid, getRegistryName().getPath());
 	}
 }
 

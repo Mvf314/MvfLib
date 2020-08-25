@@ -1,5 +1,6 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.datagen.BlockStateGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -18,7 +19,7 @@ import javax.annotation.Nullable;
  * The DirectionalXZBlock is like the DirectionalBlock, but without the option of facing up and down (locked to the horizontal plane).
  * Useful for machines.
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.5
  * @since 0.0.4
  */
 public abstract class DirectionalXZBlock extends BaseBlock {
@@ -61,5 +62,17 @@ public abstract class DirectionalXZBlock extends BaseBlock {
 			return Direction.NORTH;
 		}
 		return dir;
+	}
+
+	/**
+	 * Set default block state
+	 * @param modid Mod ID
+	 * @return Block state JSON
+	 */
+	@Override
+	public String getBlockState(String modid) {
+		return BlockStateGenerator.generateFromStates(
+				BlockStateGenerator.getDirectionalXZ(modid, getRegistryName().getPath())
+		);
 	}
 }

@@ -1,7 +1,7 @@
 package mvf314.mvflib.block;
 
 import mvf314.mvflib.datagen.BlockStateGenerator;
-import mvf314.mvflib.datagen.ItemModel;
+import mvf314.mvflib.datagen.ItemModelGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import mvf314.mvflib.tools.IBlockState;
 import mvf314.mvflib.tools.IItemModel;
@@ -62,11 +62,21 @@ public abstract class BaseBlock extends Block implements ITranslatable, IItemMod
 		return lang;
 	}
 
+	/**
+	 * Set standard item model
+	 * @param modid Mod ID
+	 * @return Item model JSON
+	 */
 	@Override
 	public String getItemModel(String modid) {
-		return ItemModel.getBlock(modid, getRegistryName().getPath());
+		return ItemModelGenerator.getBlock(modid, getRegistryName().getPath());
 	}
 
+	/**
+	 * Set standard block state
+	 * @param modid Mod ID
+	 * @return Block state JSON
+	 */
 	@Override
 	public String getBlockState(String modid) {
 		return BlockStateGenerator.get(modid, getRegistryName().getPath());

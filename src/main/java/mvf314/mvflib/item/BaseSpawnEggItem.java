@@ -1,6 +1,6 @@
 package mvf314.mvflib.item;
 
-import mvf314.mvflib.datagen.ItemModel;
+import mvf314.mvflib.datagen.ItemModelGenerator;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -76,8 +76,13 @@ public abstract class BaseSpawnEggItem extends BaseItem {
 	@Override
 	public abstract ActionResultType onItemUse(ItemUseContext context);
 
+	/**
+	 * Get standard item model
+	 * @param modid Mod ID
+	 * @return JSON String
+	 */
 	@Override
 	public String getItemModel(String modid) {
-		return ItemModel.getSpawnEgg();
+		return ItemModelGenerator.getSpawnEgg();
 	}
 }

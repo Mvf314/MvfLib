@@ -1,5 +1,6 @@
 package mvf314.mvflib.item;
 
+import mvf314.mvflib.datagen.ItemModel;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EntityType;
@@ -16,7 +17,7 @@ import java.util.Objects;
 /**
  * Item for spawn eggs.
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.5
  * @since 0.0.3
  */
 public abstract class BaseSpawnEggItem extends BaseItem {
@@ -74,4 +75,9 @@ public abstract class BaseSpawnEggItem extends BaseItem {
 	 */
 	@Override
 	public abstract ActionResultType onItemUse(ItemUseContext context);
+
+	@Override
+	public String getItemModel(String modid) {
+		return ItemModel.getSpawnEgg();
+	}
 }

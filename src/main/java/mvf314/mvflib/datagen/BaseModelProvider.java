@@ -2,13 +2,21 @@ package mvf314.mvflib.datagen;
 
 import mvf314.mvflib.block.BaseBlock;
 import mvf314.mvflib.item.BaseItem;
-import mvf314.mvflib.item.BaseSpawnEggItem;
 import mvf314.mvflib.setup.RegistryMap;
+import mvf314.mvflib.tools.FileIO;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DirectoryCache;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Data provider for item models
@@ -18,7 +26,13 @@ import javax.annotation.Nonnull;
  */
 public abstract class BaseModelProvider extends ItemModelProvider {
 
+	public static final Logger LOGGER = LogManager.getLogger();
+
 	private final RegistryMap map;
+
+	protected final Map<ResourceLocation, String> itemModels = new HashMap<>();
+
+	private String modid;
 
 	/**
 	 * Couple Data generator to model provider
@@ -29,6 +43,7 @@ public abstract class BaseModelProvider extends ItemModelProvider {
 	public BaseModelProvider(DataGenerator generator, String modid, ExistingFileHelper existingFileHelper, RegistryMap registryMap) {
 		super(generator, modid, existingFileHelper);
 		map = registryMap;
+		this.modid = modid;
 	}
 
 	/**
@@ -37,43 +52,31 @@ public abstract class BaseModelProvider extends ItemModelProvider {
 	@Override
 	protected abstract void registerModels();
 
-	/**
-	 * Create item model for a block (in inventory)
-	 * @param block Block
-	 */
-	protected void createBlockItemModel(BaseBlock block) {
-		createBlockItemWithCustomModel(block, map.getValue(block));
+	protected void generateItemModel(BaseItem item) {
+		itemModels.put(item.getRegistryName(), item.getItemModel(modid));
 	}
 
-	/**
-	 * Create item model for a block (in inventory) with a specified block model
-	 * @param block Block
-	 * @param modelName Model name
-	 */
-	protected void createBlockItemWithCustomModel(BaseBlock block, String modelName) {
-		String name = map.getValue(block);
-		getBuilder("item/" + name)
-				.parent(getExistingFile(modLoc("block/" + modelName)));
+	protected void generateItemModel(BaseBlock block) {
+		itemModels.put(block.getRegistryName(), block.getItemModel(modid));
 	}
 
-	/**
-	 * Create item model for normal item
-	 * @param item Item
-	 */
-	protected void createSimpleItemModel(BaseItem item) {
-		String name = map.getValue(item);
-		getBuilder("item/" + name)
-				.parent(getExistingFile(mcLoc("item/generated")))
-				.texture("layer0", "item/" + name);
+	@Override
+	public void act(DirectoryCache cache) {
+		registerModels();
+
+		writeItemModels(cache, itemModels);
 	}
 
-	/**
-	 * Create item model for spawn egg item
-	 * @param item Spawn Egg Item
-	 */
-	protected void createSpawnEggModel(BaseSpawnEggItem item) {
-		getBuilder("item/" + map.getValue(item))
-				.parent(getExistingFile(mcLoc("item/template_spawn_egg")));
+	private void writeItemModels(DirectoryCache cache, Map<ResourceLocation, String> models) {
+		Path outFolder = this.generator.getOutputFolder();
+		models.forEach((key, model) -> {
+			Path path = outFolder.resolve("assets/" + key.getNamespace() + "/models/item/" + key.getPath() + ".json");
+			try {
+				FileIO.save(cache, model, path);
+			} catch (IOException e) {
+				LOGGER.error("Couldn't write item model {}", path, e);
+			}
+		});
 	}
 
 	/**

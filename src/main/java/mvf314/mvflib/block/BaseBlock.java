@@ -1,6 +1,10 @@
 package mvf314.mvflib.block;
 
+import mvf314.mvflib.datagen.BlockStateGenerator;
+import mvf314.mvflib.datagen.ItemModel;
 import mvf314.mvflib.setup.RegistryMap;
+import mvf314.mvflib.tools.IBlockState;
+import mvf314.mvflib.tools.IItemModel;
 import mvf314.mvflib.tools.ITranslatable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -12,10 +16,10 @@ import java.util.Map;
 /**
  * The BaseBlock class is a simple abstract wrapper for the Block class and couples a registry name to the block object
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.5
  * @since 0.0.1
  */
-public abstract class BaseBlock extends Block implements ITranslatable {
+public abstract class BaseBlock extends Block implements ITranslatable, IItemModel, IBlockState {
 
 	/**
 	 * Language map
@@ -56,5 +60,15 @@ public abstract class BaseBlock extends Block implements ITranslatable {
 	 */
 	public Map<String, String> getLang() {
 		return lang;
+	}
+
+	@Override
+	public String getItemModel(String modid) {
+		return ItemModel.getBlock(modid, getRegistryName().getPath());
+	}
+
+	@Override
+	public String getBlockState(String modid) {
+		return BlockStateGenerator.get(modid, getRegistryName().getPath());
 	}
 }

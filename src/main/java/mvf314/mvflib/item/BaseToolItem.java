@@ -1,5 +1,6 @@
 package mvf314.mvflib.item;
 
+import mvf314.mvflib.datagen.ItemModel;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -68,6 +69,11 @@ public abstract class BaseToolItem extends BaseItem {
 	public boolean hitEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
 		addDamage(hitDamage, stack, attacker);
 		return super.hitEntity(stack, target, attacker);
+	}
+
+	@Override
+	public String getItemModel(String modid) {
+		return ItemModel.getHandheld(modid, getRegistryName().getPath());
 	}
 }
 

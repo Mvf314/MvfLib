@@ -4,8 +4,10 @@ import mvf314.mvflib.block.BaseBlock;
 import mvf314.mvflib.block.DirectionalBlock;
 import mvf314.mvflib.block.DirectionalXZBlock;
 import mvf314.mvflib.setup.RegistryMap;
+import mvf314.mvflib.tools.FileIO;
 import net.minecraft.block.BlockState;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.DirectoryCache;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.Direction;
 import net.minecraft.util.ResourceLocation;
@@ -13,20 +15,34 @@ import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ExistingFileHelper;
 import net.minecraftforge.client.model.generators.ModelFile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.annotation.Nonnull;
+import java.io.IOException;
+import java.nio.file.Path;
 import java.security.InvalidParameterException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
  * This class is a data provider for block states and block models
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.5
  * @since 0.0.2
  */
 public abstract class BaseBlockStateProvider extends BlockStateProvider {
 
+	public static final Logger LOGGER = LogManager.getLogger();
+
 	private final RegistryMap map;
+
+	protected final Map<ResourceLocation, String> blockStates = new HashMap<>();
+
+	private String modid;
+
+	private DataGenerator generator;
 
 	/**
 	 * Couple data generator to this class
@@ -36,6 +52,8 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 	 */
 	public BaseBlockStateProvider(DataGenerator gen, String modid, ExistingFileHelper exFileHelper, RegistryMap registryMap) {
 		super(gen, modid, exFileHelper);
+		this.generator = gen;
+		this.modid = modid;
 		map = registryMap;
 	}
 
@@ -109,6 +127,29 @@ public abstract class BaseBlockStateProvider extends BlockStateProvider {
 		ResourceLocation locRight = modLoc("block/" + name + right);
 
 		createDirectionalModelBlockstate(block, models().cube(name, locDown, locUp, locFront, locBack, locLeft, locRight));
+	}
+
+	protected void generateBlockState(BaseBlock block) {
+		blockStates.put(block.getRegistryName(), block.getBlockState(modid));
+	}
+
+	@Override
+	public void act(DirectoryCache cache) throws IOException {
+		registerStatesAndModels();
+
+		writeStates(cache, blockStates);
+	}
+
+	private void writeStates(DirectoryCache cache, Map<ResourceLocation, String> states) {
+		Path outFolder = this.generator.getOutputFolder();
+		states.forEach((key, state) -> {
+			Path path = outFolder.resolve("assets/" + key.getNamespace() + "/blockstates/" + key.getPath() + ".json");
+			try {
+				FileIO.save(cache, state, path);
+			} catch (IOException e) {
+				LOGGER.error("Couldn't write block state {}", path, e);
+			}
+		});
 	}
 
 	/**

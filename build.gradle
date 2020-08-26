@@ -19,7 +19,7 @@ repositories {
 	}
 }
 
-version = '0.0.5'
+version = '0.0.6'
 group = 'mvf314.mvflib' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'mvflib'
 

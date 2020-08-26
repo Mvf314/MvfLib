@@ -5,13 +5,17 @@ import com.google.gson.GsonBuilder;
 import mvf314.mvflib.block.BaseBlock;
 import mvf314.mvflib.item.BaseItem;
 import mvf314.mvflib.setup.RegistryMap;
+import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.data.LootTableProvider;
+import net.minecraft.state.IProperty;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.*;
+import net.minecraft.world.storage.loot.conditions.BlockStateProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +27,7 @@ import java.util.Map;
 /**
  * The BaseLootTableProvider class can be extended to generate loot tables
  * @author Mvf314
- * @version 0.0.4
+ * @version 0.0.6
  * @since 0.0.1
  */
 public abstract class BaseLootTableProvider extends LootTableProvider {
@@ -63,13 +67,48 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 */
 	protected abstract void addTables();
 
+	protected ItemLootEntry.Builder<?> itemEntry(IItemProvider item) {
+		return ItemLootEntry.builder(item);
+	}
+
+	protected LootTable.Builder makeFromPools(LootPool.Builder... pools) {
+		LootTable.Builder builder = LootTable.builder();
+		for (LootPool.Builder pool : pools) {
+			builder = builder.addLootPool(pool);
+		}
+		return builder;
+	}
+
+	protected LootPool.Builder getPool(String name, IRandomRange range) {
+		return LootPool.builder().name(name)
+				.rolls(range);
+	}
+
+	protected LootPool.Builder getPool(String name) {
+		return getPool(name, ConstantRange.of(1));
+	}
+
+	protected LootPool.Builder getSimplePool(BaseBlock block) {
+		return getPool(map.getValue(block))
+				.addEntry(itemEntry(block));
+	}
+
+	protected BlockStateProperty.Builder boolBlockStateCondition(BaseBlock block, IProperty<Boolean> property, boolean value) {
+		return BlockStateProperty.builder(block).fromProperties(StatePropertiesPredicate.Builder.newBuilder().withBoolProp(property, value));
+	}
+
+	protected void addTable(BaseBlock block, LootTable.Builder lootTable) {
+		lootTables.put(block, lootTable);
+	}
+
+
 	/**
 	 * Add a simple loot table to be generated
 	 * @param block Block
 	 * @see BaseLootTableProvider#createSimpleTable(BaseBlock)
 	 */
 	protected void addSimpleTable(BaseBlock block) {
-		lootTables.put(block, createSimpleTable(block));
+		addTable(block, createSimpleTable(block));
 	}
 
 	/**
@@ -78,25 +117,17 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 * @return      The loot table builder
 	 */
 	protected LootTable.Builder createSimpleTable(BaseBlock block) {
-		LootPool.Builder builder = LootPool.builder()
-				.name(map.getValue(block))
-				.rolls(ConstantRange.of(1))
-				.addEntry(ItemLootEntry.builder(block));
-		return LootTable.builder().addLootPool(builder);
+		return makeFromPools(getSimplePool(block));
 	}
 
 	/**
-	 * Create a loot table that drops an item (think coal ore, diamond ore)
+	 * Create a loot table that drops an item
 	 * @param block Block object
 	 * @param item  Item to drop
 	 * @return		Loot table builder
 	 */
-	protected LootTable.Builder createGemTable(BaseBlock block, BaseItem item) {
-		LootPool.Builder builder = LootPool.builder()
-				.name(map.getValue(block))
-				.rolls(ConstantRange.of(1))
-				.addEntry(ItemLootEntry.builder(item));
-		return LootTable.builder().addLootPool(builder);
+	protected LootTable.Builder createItemTable(BaseBlock block, IItemProvider item) {
+		return makeFromPools(getPool(map.getValue(block)).addEntry(itemEntry(item)));
 	}
 
 	/**
@@ -104,8 +135,8 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 * @param block Block object
 	 * @param item  Item to drop
 	 */
-	protected void addGemTable(BaseBlock block, BaseItem item) {
-		lootTables.put(block, createGemTable(block, item));
+	protected void addItemTable(BaseBlock block, BaseItem item) {
+		lootTables.put(block, createItemTable(block, item));
 	}
 
 	/**

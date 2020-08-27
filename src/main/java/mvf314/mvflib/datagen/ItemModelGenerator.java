@@ -5,17 +5,28 @@ import mvf314.jsontools.JsonBuilder;
 /**
  * The ItemModelGenerator class contains utilities for generating item model JSON
  * @author Mvf314
- * @version 0.0.5
+ * @version 0.0.6
  * @since 0.0.5
  */
 public class ItemModelGenerator {
-	// Get a simple item model with a parent
-	private static String get(String parent) {
+	/**
+	 * Get a simple item model
+	 * @param parent Item model parent
+	 * @return JSON String
+	 */
+	public static String get(String parent) {
 		return new JsonBuilder()
 				.add("parent", parent).get();
 	}
-	// Get a simple item model with texture and a certain parent
-	private static String get(String parent, String modid, String resource) {
+
+	/**
+	 * Get a textured simple item model
+	 * @param parent Item model parent
+	 * @param modid Mod ID
+	 * @param resource Texture location
+	 * @return
+	 */
+	public static String get(String parent, String modid, String resource) {
 		return new JsonBuilder()
 				.add("parent", parent)
 				.add("textures", new JsonBuilder()

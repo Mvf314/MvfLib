@@ -1,8 +1,9 @@
 package mvf314.mvflib.setup;
 
 import mvf314.mvflib.container.BaseContainer;
-import mvf314.mvflib.item.BaseSpawnEggItem;
+import mvf314.mvflib.item.BaseItem;
 import mvf314.mvflib.tile.BaseTileEntity;
+import mvf314.mvflib.tools.IClientColor;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.BlockItem;
@@ -18,7 +19,7 @@ import java.util.function.Supplier;
 /**
  * The Registry class has classes which simplify object registration
  * @author Mvf314
- * @version 0.0.3
+ * @version 0.0.6
  * @since 0.0.1
  */
 public class Registry {
@@ -53,12 +54,12 @@ public class Registry {
 		}
 
 		/**
-		 * Register spawn egg color, call this in client registration
+		 * Register item color, call this in client registration
 		 * @param event Registry event that is passed to the subscribed method
-		 * @param item  Spawn egg to register
+		 * @param item  Item to register (needs to implement IClientColor)
 		 */
-		public static void registerSpawnEggColor(ColorHandlerEvent.Item event, BaseSpawnEggItem item) {
-			event.getItemColors().register((stack, i) -> item.COLOR, item);
+		public static <T extends BaseItem & IClientColor> void registerItemColor(ColorHandlerEvent.Item event, T item) {
+			event.getItemColors().register((stack, i) -> item.getColor(), item);
 		}
 	}
 

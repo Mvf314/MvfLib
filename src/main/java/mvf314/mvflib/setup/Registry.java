@@ -41,6 +41,10 @@ public class Registry {
 		public static void registerItem(final RegistryEvent.Register<Item> event, Block block, RegistryMap registryMap) {
 			event.getRegistry().register(new BlockItem(block, registryMap.getItemGroup()).setRegistryName(block.getRegistryName()));
 		}
+
+		public static void registerItemNoTab(final RegistryEvent.Register<Item> event, Block block) {
+			event.getRegistry().register(new BlockItem(block, new Item.Properties()).setRegistryName(block.getRegistryName()));
+		}
 	}
 
 	public static class Items {

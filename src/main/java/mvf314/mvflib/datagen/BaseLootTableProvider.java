@@ -3,7 +3,6 @@ package mvf314.mvflib.datagen;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import mvf314.mvflib.block.BaseBlock;
-import mvf314.mvflib.item.BaseItem;
 import mvf314.mvflib.setup.RegistryMap;
 import net.minecraft.advancements.criterion.StatePropertiesPredicate;
 import net.minecraft.block.Block;
@@ -11,6 +10,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DirectoryCache;
 import net.minecraft.data.IDataProvider;
 import net.minecraft.data.LootTableProvider;
+import net.minecraft.item.Item;
 import net.minecraft.state.IProperty;
 import net.minecraft.util.IItemProvider;
 import net.minecraft.util.ResourceLocation;
@@ -135,7 +135,7 @@ public abstract class BaseLootTableProvider extends LootTableProvider {
 	 * @param block Block object
 	 * @param item  Item to drop
 	 */
-	protected void addItemTable(BaseBlock block, BaseItem item) {
+	protected void addItemTable(BaseBlock block, Item item) {
 		lootTables.put(block, createItemTable(block, item));
 	}
 
